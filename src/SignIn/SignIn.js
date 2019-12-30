@@ -4,7 +4,7 @@ import "./SignIn.css";
 
 class SignIn extends Component {
   state = {
-    userId: null,
+    userId: "",
     user: [],
     loading: false
   };
@@ -13,20 +13,31 @@ class SignIn extends Component {
     const profiles = [];
     Axios.get("/profile.json").then(resp => {
       for (let i in resp.data) {
-        const uid = resp.data[i];
-        console.log(uid);
-        if (uid === this.state.userId) {
-          profiles.push({
-            ...resp.data[i],
-            id: i
-          });
+        // if (resp.data[i].email === this.state.userId) {
+        profiles.push({
+          ...resp.data[i]
+        });
+      }
+      const data = profiles.map(ky => {
+        return Object.values(ky);
+      });
+
+      for (let i in data) {
+        // console.log(data)
+
+        console.log(data[i][0].email);
+        if (data[i][0].email === this.state.userId) {
+          console.log("welcome user " + data[i][0].name);
+          // }
         }
+        //console.log(]);
       }
     });
   }
 
   onChangeHandler = event => {
-    this.setState({ userId: event.target.value });
+    //const name=event.target.value
+    this.setState();
     console.log(this.state.userId);
   };
 
@@ -39,8 +50,6 @@ class SignIn extends Component {
     let userDetails = null;
 
     if (this.state.loading) {
-      console.log("checking.." + this.state.loading);
-
       userDetails = (
         <div className="signIn">
           <label className="label">
