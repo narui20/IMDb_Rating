@@ -100,12 +100,9 @@ class Profile extends Component {
     }
     return (
       <div>
-        <nav>
-          <h2>IMDb</h2>
-          <button className="button" onClick={this.onButtonClick}>
-            Profile
-          </button>
-        </nav>
+        <button className="button" onClick={this.onButtonClick}>
+          Profile
+        </button>
         {profiles}
       </div>
     );
