@@ -14,8 +14,8 @@ class SignIn extends Component {
     Axios.get("/profile.json").then(resp => {
       for (let i in resp.data) {
         const uid = resp.data[i];
-        console.log(uid[uid]);
-        if (uid[uid] === this.state.userId) {
+        console.log(uid);
+        if (uid === this.state.userId) {
           profiles.push({
             ...resp.data[i],
             id: i
@@ -27,6 +27,7 @@ class SignIn extends Component {
 
   onChangeHandler = event => {
     this.setState({ userId: event.target.value });
+    console.log(this.state.userId);
   };
 
   onSignIn = () => {
