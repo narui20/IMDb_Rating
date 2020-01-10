@@ -5,7 +5,8 @@
   border: 2px solidrgba(29, 29, 102, 0.867);
   color: rgb(230, 25, 59);
   background-color: #f2f2f2;
-  width: 600px;
+  width: 400px;
+  box-sizing: border-box;
 }
 
 .input {
@@ -14,11 +15,15 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  width: 100%;
 }
 input[type="submit"]:hover {
   background-color: #f44336;
 }
 
+input[type="text"]:hover {
+  background-color: #aaa1a1;
+}
 .radio {
   padding: 4px;
   margin: 10px;

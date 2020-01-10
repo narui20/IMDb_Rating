@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Profile.css";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
 
 class Profile extends Component {
   state = {
@@ -8,6 +9,7 @@ class Profile extends Component {
     email: "",
     age: "",
     gender: "",
+    password: "",
     data: false
   };
 
@@ -27,7 +29,8 @@ class Profile extends Component {
       name: this.state.name,
       email: this.state.email,
       age: this.state.age,
-      gender: this.state.gender
+      gender: this.state.gender,
+      password: this.state.password
     };
 
     axios
@@ -49,6 +52,7 @@ class Profile extends Component {
             className="input"
             name="name"
             type="text"
+            placeholder="Name"
             onChange={event => this.onHandleChange(event)}
           />
           <br />
@@ -57,14 +61,16 @@ class Profile extends Component {
             className="input"
             name="email"
             type="email"
+            placeholder="Email-Id"
             onChange={event => this.onHandleChange(event)}
           />
           <br />
-          Age:{" "}
+          Age:
           <input
             className="input"
             name="age"
             type="text"
+            placeholder="Age"
             onChange={event => this.onHandleChange(event)}
           />
           <br />
@@ -90,6 +96,17 @@ class Profile extends Component {
             />
           </label>
           <br />
+          <label className="label">
+            Create Password
+            <input
+              className="input"
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={event => this.onHandleChange(event)}
+            />
+          </label>
+          <br />
           <input
             type="submit"
             className="button"
@@ -109,4 +126,4 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+export default withRouter(Profile);

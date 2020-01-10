@@ -1,44 +1,47 @@
 import React, { Component } from "react";
 import Axios from "../axios-handler";
+import Home from "../Home/Home";
 import "./SignIn.css";
+import { withRouter } from "react-router-dom";
 
 class SignIn extends Component {
   state = {
     userId: "",
-    user: [],
     loading: false
   };
 
-  signInHandler() {
+  signInHandler = () => {
     const profiles = [];
     Axios.get("/profile.json").then(resp => {
       for (let i in resp.data) {
-        // if (resp.data[i].email === this.state.userId) {
-        profiles.push({
-          ...resp.data[i]
-        });
+        profiles.push(resp.data[i]);
       }
+
       const data = profiles.map(ky => {
+        console.log(Object.values(ky)); //[Object]
+        // [Object] 0: Object age: "12" email: "a@gmail.com" gender: "Male" name: "a"
+        console.log(ky); //Object {user: Object} user: Object age: "12" email: "a@gmail.com" gender: "Male" name: "a"
         return Object.values(ky);
       });
 
       for (let i in data) {
-        // console.log(data)
-
-        console.log(data[i][0].email);
+        const len = data.length - 1;
+        console.log(len + " " + i);
         if (data[i][0].email === this.state.userId) {
-          console.log("welcome user " + data[i][0].name);
-          // }
+          console.log("Id found " + data[i][0].name);
+          console.log("History " + this.props.history);
+          console.log(this.props);
+          return this.props.history.push("/home");
+        } else if (i == len) {
+          alert("Account not found, Please Signup");
         }
-        //console.log(]);
       }
     });
-  }
+  };
 
   onChangeHandler = event => {
-    //const name=event.target.value
-    this.setState();
-    console.log(this.state.userId);
+    console.log("userId1", this.state.userId);
+    this.setState({ userId: event.target.value });
   };
 
   onSignIn = () => {
@@ -78,4 +81,4 @@ class SignIn extends Component {
     );
   }
 }
-export default SignIn;
+export default withRouter(SignIn);

@@ -1,7 +1,11 @@
 import React, { Component } from "react";
-import Profile from "./Profile/Profile";
-import "./App.css";
+//import Profile from "./Profile/Profile";
 import SignIn from "./SignIn/SignIn";
+import { Switch, Route } from "react-router-dom";
+import Profile from "./Profile/Profile";
+import Home from "./Home/Home";
+import "./App.css";
+import Layout from "./Layout/Layout";
 
 class App extends Component {
   state = {};
@@ -9,20 +13,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <nav>
-          <div className="title">
-            <h2>IMDb</h2>&nbsp;
-            <h4 className="subtitle">Experience Like Nowhere...</h4>
-          </div>
-          <ul className="ul">
-            <li className="li">
-              <Profile />
-            </li>
-            <li className="li">
-              <SignIn />
-            </li>
-          </ul>
-        </nav>
+        <Layout>
+          <Switch>
+            <Route path="/home" exact component={Home} /> *
+          </Switch>
+        </Layout>
       </div>
     );
   }
