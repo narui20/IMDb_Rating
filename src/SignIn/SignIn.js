@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import Axios from "../axios-handler";
-import Home from "../Home/Home";
 import "./SignIn.css";
 import { withRouter } from "react-router-dom";
 
 class SignIn extends Component {
   state = {
-    userId: "",
+    email: "",
+    pass: "",
     loading: false
   };
 
@@ -27,7 +27,10 @@ class SignIn extends Component {
       for (let i in data) {
         const len = data.length - 1;
         console.log(len + " " + i);
-        if (data[i][0].email === this.state.userId) {
+        if (
+          data[i][0].email === this.state.email &&
+          data[i][0].password === this.state.pass
+        ) {
           console.log("Id found " + data[i][0].name);
           console.log("History " + this.props.history);
           console.log(this.props);
@@ -40,8 +43,8 @@ class SignIn extends Component {
   };
 
   onChangeHandler = event => {
-    console.log("userId1", this.state.userId);
-    this.setState({ userId: event.target.value });
+    console.log("email1", this.state.email);
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   onSignIn = () => {
@@ -60,9 +63,20 @@ class SignIn extends Component {
             <input
               className="input"
               type="text"
+              name="email"
               onChange={event => this.onChangeHandler(event)}
             />
           </label>
+          <label className="label">
+            Enter Your Password:
+            <input
+              className="input"
+              type="text"
+              name="pass"
+              onChange={event => this.onChangeHandler(event)}
+            />
+          </label>
+          <br />
           <input
             type="submit"
             className="button"
