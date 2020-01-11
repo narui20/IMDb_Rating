@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Profile.css";
-import axios from "axios";
+import Axios from "../axios-handler";
 import { withRouter } from "react-router-dom";
 
 class Profile extends Component {
@@ -13,9 +13,8 @@ class Profile extends Component {
     data: false
   };
 
-  onHandleChange(event) {
+  onHandleChange(event) { 
     this.setState({ [event.target.name]: event.target.value });
-    console.log(this.state.name);
   }
 
   onButtonClick = () => {
@@ -24,20 +23,42 @@ class Profile extends Component {
   };
 
   profileHandler = () => {
-    console.log("inside");
-    let user = {
-      name: this.state.name,
-      email: this.state.email,
-      age: this.state.age,
-      gender: this.state.gender,
-      password: this.state.password
-    };
+    //Fetching email to check new user 
+    let emailList=[];
+    Axios.get("/profile.json").then(resp=>{
+      for(let i in resp.data){
+        console.log("for");
+        emailList.push(resp.data[i]);
+      }
+    
+    const List=emailList.map(key=> Object.values(key));
 
-    axios
-      .post("https://burgerbuilder-2e72a.firebaseio.com/profile.json", { user })
-      .then(resp => {
-        console.log(resp.data);
-      });
+    for(let i in List){
+      const len = List.length - 1;
+      console.log("email List: "+List[i][0].email)
+
+      if(List[i][0].email=== this.state.email){
+       return  alert("Account already exist with this emailId.")
+      }
+      else if(len == i && List[i][0].email!== this.state.email){
+        console.log("inside");
+        let user = {
+          name: this.state.name,
+          email: this.state.email,
+          age: this.state.age,
+          gender: this.state.gender,
+          password: this.state.password
+        };
+    
+        Axios
+          .post("/profile.json", { user })
+          .then(resp => {
+            alert("Account created successfully!!")
+          });
+      }
+    }
+  });
+   
   };
 
   render() {
