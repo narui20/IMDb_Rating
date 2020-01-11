@@ -36,7 +36,7 @@ class SignIn extends Component {
           console.log(this.props);
           return this.props.history.push("/home");
         } else if (i == len) {
-          alert("Account not found, Please Signup");
+          alert("Incorrect Credentials OR No Account, Please Signup");
         }
       }
     });
