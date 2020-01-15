@@ -1,0 +1,9 @@
+.layout {
+  padding: 20px;
+  margin: 10px auto;
+  border: 2px solidrgba(29, 29, 102, 0.867);
+  color: rgb(245, 247, 246);
+  background-color: #530423;
+  width: 300px;
+  box-shadow: 0px 2px 4px 2px #aaa1a1;
+}

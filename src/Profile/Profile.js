@@ -13,61 +13,63 @@ class Profile extends Component {
     data: false
   };
 
-  onHandleChange(event) { 
+  onHandleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  onButtonClick = () => {
+  componentDidMount() {
     const check = this.state.data;
+    console.log("fbfdhdj");
     this.setState({ data: !check });
-  };
+  }
 
   profileHandler = () => {
-    //Fetching email to check new user 
-    let emailList=[];
-    Axios.get("/profile.json").then(resp=>{
-      for(let i in resp.data){
+    //Fetching email to check new user
+    let emailList = [];
+    Axios.get("/profile.json").then(resp => {
+      for (let i in resp.data) {
         console.log("for");
         emailList.push(resp.data[i]);
       }
-    
-    const List=emailList.map(key=> Object.values(key));
 
-    for(let i in List){
-      const len = List.length - 1;
-      console.log("email List: "+List[i][0].email)
+      const List = emailList.map(key => Object.values(key));
 
-      if(List[i][0].email=== this.state.email){
-       return  alert("Account already exist with this emailId.")
-      }
-      else if(len == i && List[i][0].email!== this.state.email){
-        console.log("inside");
-        let user = {
-          name: this.state.name,
-          email: this.state.email,
-          age: this.state.age,
-          gender: this.state.gender,
-          password: this.state.password
-        };
-    
-        Axios
-          .post("/profile.json", { user })
-          .then(resp => {
-            alert("Account created successfully!!")
+      for (let i in List) {
+        const len = List.length - 1;
+        console.log("email List: " + List[i][0].email);
+
+        if (List[i][0].email === this.state.email) {
+          return alert("Account already exist with this emailId.");
+        } else if (len == i && List[i][0].email !== this.state.email) {
+          console.log("inside");
+          let user = {
+            name: this.state.name,
+            email: this.state.email,
+            age: this.state.age,
+            gender: this.state.gender,
+            password: this.state.password
+          };
+
+          Axios.post("/profile.json", { user }).then(resp => {
+            alert("Account created successfully!!");
           });
+        }
       }
-    }
-  });
-   
+    });
   };
 
+  onReturn = () => {
+    this.props.history.replace("/");
+  };
   render() {
     let profiles = null;
 
     if (this.state.data) {
       profiles = (
         <div className="Profile">
-          <div style={{ fontSize: "30px", fontStyle: "bold" }}>Profile</div>
+          <div style={{ fontSize: "30px", fontStyle: "bold" }}>
+            Create Account
+          </div>
           Name:
           <input
             className="input"
@@ -124,6 +126,7 @@ class Profile extends Component {
               type="password"
               name="password"
               placeholder="Password"
+              required
               onChange={event => this.onHandleChange(event)}
             />
           </label>
@@ -133,14 +136,18 @@ class Profile extends Component {
             className="button"
             onClick={this.profileHandler}
           />
+          <button className="button" onClick={this.onReturn}>
+            Back
+          </button>
         </div>
       );
     }
     return (
       <div>
-        <button className="button" onClick={this.onButtonClick}>
+        {/* <button className="button" onClick={this.onButtonClick}>
           Profile
-        </button>
+        </button> */}
+
         {profiles}
       </div>
     );

@@ -2,14 +2,18 @@ import React, { Component } from "react";
 import Axios from "../axios-handler";
 import "./SignIn.css";
 import { withRouter } from "react-router-dom";
+import Home from "../Home/Home";
 
 class SignIn extends Component {
   state = {
     email: "",
     pass: "",
-    loading: false
+    loading: true
   };
 
+  onReturn = () => {
+    this.props.history.replace("/");
+  };
   signInHandler = () => {
     const profiles = [];
     Axios.get("/profile.json").then(resp => {
@@ -26,16 +30,16 @@ class SignIn extends Component {
 
       for (let i in data) {
         const len = data.length - 1;
-        console.log(len + " " + i);
         if (
           data[i][0].email === this.state.email &&
           data[i][0].password === this.state.pass
         ) {
-          console.log("Id found " + data[i][0].name);
-          console.log("History " + this.props.history);
-          console.log(this.props);
-          return this.props.history.push("/home");
-        } else if (i == len) {
+          console.log("found: " + data[i][0].email);
+          return this.props.history.push({
+            pathname: "/home",
+            state: { data: data[i][0].name }
+          });
+        } else if (i == len && data[i][0].email !== this.state.email) {
           alert("Incorrect Credentials OR No Account, Please Signup");
         }
       }
@@ -43,7 +47,6 @@ class SignIn extends Component {
   };
 
   onChangeHandler = event => {
-    console.log("email1", this.state.email);
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -58,6 +61,7 @@ class SignIn extends Component {
     if (this.state.loading) {
       userDetails = (
         <div className="signIn">
+          <h1>Login</h1>
           <label className="label">
             Enter Your Email Id:
             <input
@@ -71,7 +75,7 @@ class SignIn extends Component {
             Enter Your Password:
             <input
               className="input"
-              type="text"
+              type="password"
               name="pass"
               onChange={event => this.onChangeHandler(event)}
             />
@@ -82,14 +86,17 @@ class SignIn extends Component {
             className="button"
             onClick={this.signInHandler}
           />
+          <button className="button" onClick={this.onReturn}>
+            Back
+          </button>
         </div>
       );
     }
     return (
       <div>
-        <button className="button" onClick={this.onSignIn}>
+        {/* <button className="button" onClick={this.onSignIn}>
           SignIn
-        </button>
+        </button> */}
         {userDetails}
       </div>
     );
