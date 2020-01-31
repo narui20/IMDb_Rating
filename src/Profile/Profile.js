@@ -19,7 +19,6 @@ class Profile extends Component {
 
   componentDidMount() {
     const check = this.state.data;
-    console.log("fbfdhdj");
     this.setState({ data: !check });
   }
 

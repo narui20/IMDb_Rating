@@ -3,6 +3,7 @@ import Axios from "../axios-handler";
 import "./SignIn.css";
 import { withRouter } from "react-router-dom";
 import Home from "../Home/Home";
+import { connect } from "react-redux";
 
 class SignIn extends Component {
   state = {
@@ -35,6 +36,9 @@ class SignIn extends Component {
           data[i][0].password === this.state.pass
         ) {
           console.log("found: " + data[i][0].email);
+          {
+            this.props.onValClick();
+          }
           return this.props.history.push({
             pathname: "/home",
             state: { data: data[i][0].name }
@@ -102,4 +106,19 @@ class SignIn extends Component {
     );
   }
 }
-export default withRouter(SignIn);
+
+const mapStateToProps = state => {
+  return {
+    value: state.val
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onValClick: () => dispatch({ type: "CHANGE" })
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(SignIn));
