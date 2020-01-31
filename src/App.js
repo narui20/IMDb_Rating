@@ -15,7 +15,6 @@ class App extends Component {
           <Layout />
           <Route path="/home" exact render={props => <Home {...props} />} />
         </div>
-        <div />
       </React.Fragment>
     );
   }
