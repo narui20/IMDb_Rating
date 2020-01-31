@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component,Fragment} from "react";
 //import Profile from "./Profile/Profile";
 import { Route } from "react-router-dom";
 import Home from "./Home/Home";
@@ -10,12 +10,13 @@ class App extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <Fragment>
         <div className="main">
           <Layout />
           <Route path="/home" exact render={props => <Home {...props} />} />
         </div>
-      </React.Fragment>
+      
+      </Fragment>
     );
   }
 }
